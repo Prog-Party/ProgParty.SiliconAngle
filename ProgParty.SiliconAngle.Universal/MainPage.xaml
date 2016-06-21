@@ -1,0 +1,166 @@
+﻿<Page x:Class="ProgParty.SiliconAngle.Universal.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:UI="using:Microsoft.Advertising.WinRT.UI"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:ProgParty.SiliconAngle.Universal"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:shared="using:ProgParty.Core.Element.HtmlToRtf"
+      Background="#1a1a1a"
+      Foreground="#000000"
+      mc:Ignorable="d">
+
+    <Grid x:Name="LayoutRoot"
+          Margin="0"
+          Background="#1a1a1a"
+          Loaded="LayoutRoot_Loaded">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60" />
+            <RowDefinition />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <Image HorizontalAlignment="Center"
+               Source="/Assets/header1.png"
+               Stretch="UniformToFill" />
+
+        <Pivot x:Name="searchPivot" Grid.Row="1">
+            <!--  Pivot item one  -->
+            <PivotItem Margin="0"
+                       Background="#f0f0f0"
+                       Foreground="Black"
+                       Padding="0">
+                <PivotItem.Header>
+                    <TextBlock FontSize="30"
+                               Foreground="#cd5c5c"
+                               Text="Overview" />
+                </PivotItem.Header>
+
+                <Grid Margin="0,0,0,0" HorizontalAlignment="Stretch">
+                    <ScrollViewer Margin="0,0,0,0"
+                                  HorizontalAlignment="Stretch"
+                                  VerticalScrollBarVisibility="Visible"
+                                  VerticalScrollMode="Enabled" />
+
+                    <Grid Grid.Row="0"
+                          Margin="0,-50,0,0"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Top">
+                        <ComboBox x:Name="ComboBoxMenu"
+                                  HorizontalAlignment="Right"
+                                  VerticalAlignment="Top"
+                                  Background="#353535"
+                                  Foreground="#cd5c5c"
+                                  SelectionChanged="ComboBoxMenu_SelectionChanged">
+                            <ComboBoxItem x:Name="All" Content="All" />
+                            <ComboBoxItem x:Name="Cloud" Content="Cloud" />
+                            <ComboBoxItem x:Name="Mobile" Content="Mobile" />
+                            <ComboBoxItem x:Name="Social" Content="Social" />
+                            <ComboBoxItem x:Name="BigData" Content="BigData" />
+                            <ComboBoxItem x:Name="BleedingEdge" Content="BleedingEdge" />
+                        </ComboBox>
+                    </Grid>
+                </Grid>
+            </PivotItem>
+            <!--  Pivot item two  -->
+            <PivotItem Margin="0"
+                       Background="#f0f0f0"
+                       Padding="0">
+                <PivotItem.Header>
+                    <TextBlock FontSize="30"
+                               Foreground="#cd5c5c"
+                               Text="Article" />
+                </PivotItem.Header>
+                <Grid Margin="0,0,0,0" HorizontalAlignment="Stretch">
+                    <ScrollViewer HorizontalAlignment="Stretch"
+                                  VerticalScrollBarVisibility="Visible"
+                                  VerticalScrollMode="Enabled">
+                        <StackPanel HorizontalAlignment="Stretch" Orientation="Vertical">
+
+                            <!--  Show the Article here  -->
+                            <ListView x:Name="ImageList"
+                                      HorizontalAlignment="Stretch"
+                                      ItemsSource="{Binding Articles}"
+                                      SelectionMode="Single"
+                                      Visibility="{Binding Results.ListResultsVisibility}">
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid HorizontalAlignment="Stretch" Background="{Binding Alternation.Background}">
+                                            <StackPanel HorizontalAlignment="Stretch"
+                                                        VerticalAlignment="Center"
+                                                        Orientation="Vertical">
+                                                <TextBlock Margin="10, 10, 10, 5"
+                                                           FontSize="18"
+                                                           FontWeight="Bold"
+                                                           Foreground="Black"
+                                                           Text="{Binding Title}"
+                                                           TextAlignment="Left"
+                                                           TextWrapping="WrapWholeWords" />
+
+                                                <StackPanel Margin="20, 0, 0, 0" Orientation="Horizontal">
+                                                    <TextBlock Margin="0, 0, 10, 0"
+                                                               FontSize="10"
+                                                               Foreground="Black"
+                                                               Text="{Binding ViewsCount}"
+                                                               TextAlignment="Left" />
+                                                    <TextBlock FontSize="10"
+                                                               Foreground="Black"
+                                                               Text="{Binding AuthorTime}"
+                                                               TextAlignment="Left" />
+                                                </StackPanel>
+
+                                                <!--<RichTextBlock Width="340"
+                                                               shared:HtmlToRtfConverter.Html="{Binding Content}"
+                                                               Foreground="Black"
+                                                               Padding="5,0,5,0"
+                                                               TextWrapping="Wrap" />-->
+                                            </StackPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+
+                            <StackPanel Margin="0,0,0,15"
+                                        Orientation="Vertical"
+                                        Visibility="{Binding ArticleLoadingVisibility}">
+                                <ProgressRing Margin="50"
+                                              Background="#f0f0f0"
+                                              IsActive="True" />
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical">
+                                <Border Margin="0,20,0,40" HorizontalAlignment="Center">
+                                    <Button Width="260"
+                                            Height="80"
+                                            HorizontalAlignment="Stretch"
+                                            Background="White"
+                                            BorderBrush="Black"
+                                            Click="LoadPreviousGallery_Click"
+                                            Content="Ready? Load next article!"
+                                            Foreground="Black"
+                                            Padding="25,10,25,10" />
+                                </Border>
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </PivotItem>
+        </Pivot>
+        <Grid x:Name="AdHolder" Grid.Row="2"/>
+    </Grid>
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Click="BuyBarButton_Click"
+                          Icon="Shop"
+                          Label="Purchase" />
+            <AppBarButton Click="ContactButton_Click"
+                          Icon="ContactInfo"
+                          Label="Contact" />
+        </CommandBar>
+    </Page.BottomAppBar>
+</Page>
